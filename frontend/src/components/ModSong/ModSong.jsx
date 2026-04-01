@@ -1,9 +1,12 @@
 
 import './ModSong.css';
 
-function ModSong() {
+function ModSong({selectedSongId}) {
   return (
-    <div>ModSong</div>
+    <>
+      <div>ModSong</div>
+      <div>Stai modificando {selectedSongId}</div>
+    </>
   )
 }
 

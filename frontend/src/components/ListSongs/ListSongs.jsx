@@ -15,7 +15,7 @@ function ListSongs({songs, selectedSongId, setSelectedSongId}) {
             <tr 
               key={song.id}
               className={selectedSongId === song.id ? "active" : ""}
-              onClick={() => setSelectedSongId(song)}>
+              onClick={() => setSelectedSongId(song.id)}>
               <td>{song.title}</td>
               <td>{song.artist}</td>
             </tr>

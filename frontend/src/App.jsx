@@ -15,8 +15,9 @@ function App() {
   const [isAddSong, setIsAddSong] = useState(false)
 
 
-  function selectedSong(song) {
-    setSelectedSongId(song.id)
+  function addSelectedSong(id) {
+    console.log(id)
+    setSelectedSongId(id)
     setIsSelected(!isSelected)
   }
 
@@ -60,7 +61,7 @@ function App() {
                 onClick={UndoSelectedSong}
               >Annulla</button>
             </div>
-            <ModSong />
+            <ModSong selectedSongId={selectedSongId}/>
           </>
         ) : (
 
@@ -74,7 +75,7 @@ function App() {
                   onClick={UndoAddSong}
                 >Annulla</button>
               </div>
-              <NewSong />
+              <NewSong selectedSongId={selectedSongId}/>
             </>
           ) : (
             <>
@@ -85,7 +86,7 @@ function App() {
               <ListSongs
                 songs={songs}
                 selectedSongId={selectedSongId}
-                setSelectedSongId={selectedSong}
+                setSelectedSongId={addSelectedSong}
               />
             </>
 
