@@ -3,9 +3,12 @@ import reactLogo from './assets/react.svg';
 
 import './App.css';
 import ListSongs from './components/ListSongs/ListSongs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  const [songs, setSongs] = useState([])
+  const [selectedSongId, setSelectedSongId] = useState("")
 
   
 
@@ -13,7 +16,7 @@ function App() {
     fetch('http://localhost:3000/songs')
     .then(res => res.json())
     .then(data =>
-      console.log(data)
+      setSongs(data)
     )
   }, [])
   
@@ -21,7 +24,11 @@ function App() {
   return (
     <>
       <section id="center">
-        <ListSongs />
+        <ListSongs
+          songs={songs}
+          selectedSongId={selectedSongId}
+          setSelectedSongId={setSelectedSongId}
+        />
       </section>
 
       <div className="ticks"></div>

@@ -1,0 +1,39 @@
+.list-container {
+  margin-top: 10px;
+  width: 60%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+th {
+  
+  border: 1px solid #ddd;
+}
+
+/* riga cliccabile */
+tr {
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+
+/* hover */
+tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* riga selezionata */
+tr.active {
+  background-color: #2563eb;
+  color: white;
+}
