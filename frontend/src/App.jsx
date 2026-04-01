@@ -2,15 +2,37 @@
 import reactLogo from './assets/react.svg';
 
 import './App.css';
-import ListSongs from './components/ListSongs/ListSongs';
 import { useEffect, useState } from 'react';
+import ListSongs from './components/ListSongs/ListSongs';
+import ModSong from './components/ModSong/ModSong';
+import NewSong from './components/NewSong/NewSong';
 
 function App() {
 
   const [songs, setSongs] = useState([])
   const [selectedSongId, setSelectedSongId] = useState("")
+  const [isSelected, setIsSelected] = useState(false)
+  const [isAddSong, setIsAddSong] = useState(false)
 
-  
+
+  function selectedSong(song) {
+    setSelectedSongId(song.id)
+    setIsSelected(!isSelected)
+  }
+
+
+  function UndoSelectedSong() {
+    setIsSelected(!isSelected)
+  }
+
+  function addSong() {
+    setIsAddSong(!isAddSong)
+  }
+
+  function UndoAddSong() {
+    setIsAddSong(!isAddSong)
+  }
+
 
   useEffect(() => {
     fetch('http://localhost:3000/songs')
@@ -24,11 +46,54 @@ function App() {
   return (
     <>
       <section id="center">
-        <ListSongs
-          songs={songs}
-          selectedSongId={selectedSongId}
-          setSelectedSongId={setSelectedSongId}
-        />
+
+       
+        
+        
+        {isSelected ? (
+          <>
+            <div>
+
+              <button className='counter'>Salva</button>
+              <button 
+                className='counter'
+                onClick={UndoSelectedSong}
+              >Annulla</button>
+            </div>
+            <ModSong />
+          </>
+        ) : (
+
+          isAddSong ? (
+            <>
+              <div>
+
+                <button className='counter'>Salva</button>
+                <button 
+                  className='counter'
+                  onClick={UndoAddSong}
+                >Annulla</button>
+              </div>
+              <NewSong />
+            </>
+          ) : (
+            <>
+              <button 
+                className='counter'
+                onClick={addSong}
+              >Aggiungi</button>
+              <ListSongs
+                songs={songs}
+                selectedSongId={selectedSongId}
+                setSelectedSongId={selectedSong}
+              />
+            </>
+
+          )
+          
+        )}
+
+
       </section>
 
       <div className="ticks"></div>
@@ -76,13 +141,17 @@ function App() {
             </li>
             <li>
               <a href="https://www.linkedin.com/in/lamiera/" target="_blank">
-                <img className="button-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="" />
+                <img className="button-icon"
+                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
+                  alt="" />
                 Linkedin
               </a>
             </li>
             <li>
               <a href="mailto:ale1970sys@gmail.com" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
+                <img className="button-icon"
+                  src={reactLogo}
+                  alt="" />
                 @mail
               </a>
             </li>
@@ -91,8 +160,7 @@ function App() {
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+    
     </>
   )
 }
