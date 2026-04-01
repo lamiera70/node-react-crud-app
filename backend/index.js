@@ -1,9 +1,12 @@
 const express = require('express');
 const crypto = require('crypto');
 const app = express();
+const cors = require('cors');
 const PORT = 3000;
 
+// middleware
 app.use(express.json()); // ✅ fondamentale per leggere JSON nel body
+app.use(cors({origin: 'http://localhost:5173'}));
 
 let songs = [
   { id: crypto.randomUUID(), title: "Shape of You", artist: "Ed Sheeran" },
