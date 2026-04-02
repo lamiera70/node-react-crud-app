@@ -15,7 +15,7 @@ function App() {
   
 
 
-  function addSelectedSong(id) {
+  function addSelectedSongId(id) {
     
     setSelectedSongId(id)
     setMode("edit")
@@ -86,7 +86,7 @@ function App() {
               <ListSongs
                 songs={songs}
                 selectedSongId={selectedSongId}
-                setSelectedSongId={addSelectedSong}
+                setSelectedSongId={addSelectedSongId}
               />
           </>
         )}
