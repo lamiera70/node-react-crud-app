@@ -48,11 +48,12 @@ function App() {
     <>
       <section id="center">
 
-        {mode === "edit" ? (
+        {mode === "edit" && (
           <>
             <div>
 
               <button className='counter'>Salva</button>
+              <button className='counter'>Elimina</button>
               <button 
                 className='counter'
                 onClick={UndoSelectedSong}
@@ -60,11 +61,11 @@ function App() {
             </div>
             <ModSong selectedSong={selectedSong}/>
           </>
-        ) : (
+        )}
 
-          (mode === "add" ? (
-            <>
-              <div>
+        {mode === "add" && (
+          <>
+             <div>
 
                 <button className='counter'>Salva</button>
                 <button 
@@ -73,9 +74,11 @@ function App() {
                 >Annulla</button>
               </div>
               <NewSong selectedSong={selectedSong}/>
-            </>
-          ) : (
-            <>
+          </>
+        )}
+
+        {mode === "list" && (
+          <>
               <button 
                 className='counter'
                 onClick={addSong}
@@ -85,13 +88,9 @@ function App() {
                 selectedSong={selectedSong}
                 setSelectedSong={addSelectedSong}
               />
-            </>
-
-          ))
-          
+          </>
         )}
-
-
+        
       </section>
 
       <div className="ticks"></div>
