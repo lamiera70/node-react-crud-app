@@ -1,12 +1,17 @@
 
 import './ModSong.css';
 
-function ModSong({selectedSongId}) {
+function ModSong({selectedSong}) {
   return (
-    <>
-      <div>ModSong</div>
-      <div>Stai modificando {selectedSongId}</div>
-    </>
+    <div className="mod-card">
+      <h3>Modifica brano</h3>
+
+      <label>Titolo</label>
+      <input type="text" defaultValue={selectedSong?.title} />
+
+      <label>Artista</label>
+      <input type="text" defaultValue={selectedSong?.artist} />
+    </div>
   )
 }
 

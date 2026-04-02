@@ -10,28 +10,28 @@ import NewSong from './components/NewSong/NewSong';
 function App() {
 
   const [songs, setSongs] = useState([])
-  const [selectedSongId, setSelectedSongId] = useState("")
-  const [isSelected, setIsSelected] = useState(false)
-  const [isAddSong, setIsAddSong] = useState(false)
+  const [selectedSong, setSelectedSong] = useState(null)
+  const [mode, setMode] = useState("list")
+  
 
 
-  function addSelectedSong(id) {
-    console.log(id)
-    setSelectedSongId(id)
-    setIsSelected(!isSelected)
+  function addSelectedSong(song) {
+    
+    setSelectedSong(song)
+    setMode("edit")
   }
 
 
   function UndoSelectedSong() {
-    setIsSelected(!isSelected)
+    setMode("list")
   }
 
   function addSong() {
-    setIsAddSong(!isAddSong)
+    setMode("add")
   }
 
   function UndoAddSong() {
-    setIsAddSong(!isAddSong)
+    setMode("list")
   }
 
 
@@ -48,10 +48,7 @@ function App() {
     <>
       <section id="center">
 
-       
-        
-        
-        {isSelected ? (
+        {mode === "edit" ? (
           <>
             <div>
 
@@ -61,11 +58,11 @@ function App() {
                 onClick={UndoSelectedSong}
               >Annulla</button>
             </div>
-            <ModSong selectedSongId={selectedSongId}/>
+            <ModSong selectedSong={selectedSong}/>
           </>
         ) : (
 
-          isAddSong ? (
+          (mode === "add" ? (
             <>
               <div>
 
@@ -75,7 +72,7 @@ function App() {
                   onClick={UndoAddSong}
                 >Annulla</button>
               </div>
-              <NewSong selectedSongId={selectedSongId}/>
+              <NewSong selectedSong={selectedSong}/>
             </>
           ) : (
             <>
@@ -85,12 +82,12 @@ function App() {
               >Aggiungi</button>
               <ListSongs
                 songs={songs}
-                selectedSongId={selectedSongId}
-                setSelectedSongId={addSelectedSong}
+                selectedSong={selectedSong}
+                setSelectedSong={addSelectedSong}
               />
             </>
 
-          )
+          ))
           
         )}
 
@@ -130,29 +127,19 @@ function App() {
           <ul>
             <li>
               <a href="https://github.com/lamiera70/lamiera70" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
+                <img className="button-icon" src={reactLogo} alt="" />
                 GitHub
               </a>
             </li>
             <li>
               <a href="https://www.linkedin.com/in/lamiera/" target="_blank">
-                <img className="button-icon"
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
-                  alt="" />
+                <img className="button-icon" src={reactLogo} alt="" />
                 Linkedin
               </a>
             </li>
             <li>
               <a href="mailto:ale1970sys@gmail.com" target="_blank">
-                <img className="button-icon"
-                  src={reactLogo}
-                  alt="" />
+                <img className="button-icon" src={reactLogo} alt="" />
                 @mail
               </a>
             </li>
