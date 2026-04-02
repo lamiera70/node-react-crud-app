@@ -1,6 +1,6 @@
 import './ListSongs.css'
 
-function ListSongs({songs, selectedSong, setSelectedSong}) {
+function ListSongs({songs, selectedSongId, setSelectedSongId}) {
   return (
     <div className='list-container'>
       <table>
@@ -14,8 +14,8 @@ function ListSongs({songs, selectedSong, setSelectedSong}) {
           {songs.map(song => (
             <tr 
               key={song.id}
-              className={selectedSong?.id === song.id ? "active" : ""}
-              onClick={() => setSelectedSong(song)}>
+              className={selectedSongId === song.id ? "active" : ""}
+              onClick={() => setSelectedSongId(song.id)}>
               <td>{song.title}</td>
               <td>{song.artist}</td>
             </tr>

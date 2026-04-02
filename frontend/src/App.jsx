@@ -10,14 +10,14 @@ import NewSong from './components/NewSong/NewSong';
 function App() {
 
   const [songs, setSongs] = useState([])
-  const [selectedSong, setSelectedSong] = useState(null)
+  const [selectedSongId, setSelectedSongId] = useState(null)
   const [mode, setMode] = useState("list")
   
 
 
-  function addSelectedSong(song) {
+  function addSelectedSong(id) {
     
-    setSelectedSong(song)
+    setSelectedSongId(id)
     setMode("edit")
   }
 
@@ -59,7 +59,7 @@ function App() {
                 onClick={UndoSelectedSong}
               >Annulla</button>
             </div>
-            <ModSong selectedSong={selectedSong}/>
+            <ModSong selectedSongId={selectedSongId}/>
           </>
         )}
 
@@ -73,7 +73,7 @@ function App() {
                   onClick={UndoAddSong}
                 >Annulla</button>
               </div>
-              <NewSong selectedSong={selectedSong}/>
+              <NewSong selectedSongId={selectedSongId}/>
           </>
         )}
 
@@ -85,8 +85,8 @@ function App() {
               >Aggiungi</button>
               <ListSongs
                 songs={songs}
-                selectedSong={selectedSong}
-                setSelectedSong={addSelectedSong}
+                selectedSongId={selectedSongId}
+                setSelectedSongId={addSelectedSong}
               />
           </>
         )}
