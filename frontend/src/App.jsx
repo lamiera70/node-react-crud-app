@@ -12,6 +12,9 @@ function App() {
   const [songs, setSongs] = useState([])
   const [selectedSongId, setSelectedSongId] = useState(null)
   const [mode, setMode] = useState("list")
+
+  const [title, setTitle] = useState('');
+  const [artist, setArtist] = useState('');
   
 
 
@@ -43,7 +46,66 @@ function App() {
     )
   }, [])
 
+  useEffect(() => {
+        if (selectedSongId) {
+            fetch(`http://localhost:3000/songs/${selectedSongId}`)
+                .then(res => res.json())
+                .then(data => {
+                    setTitle(data.title);
+                    setArtist(data.artist);
+                    
+                });
+        }
+    }, [selectedSongId]);
 
+
+  function clickCreate() {
+    
+    fetch(`http://localhost:3000/songs`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: title,
+            artist: artist,
+            
+        })
+    })
+            .then(res => res.json())
+            .then(data => {
+                setTitle(data.title);
+                setArtist(data.artist);  
+                alert(`canzone creata con successo`)
+                location.reload();
+                setMode("list")
+            });
+  }
+  
+  
+  function clickEdit() {
+     
+
+      fetch(`http://localhost:3000/songs/${selectedSongId}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              title: title,
+              artist: artist,
+              
+          })
+      })
+              .then(res => res.json())
+              .then(() => {
+                  alert(`canzone modificata con successo`)
+                  location.reload();
+                  setMode("list")
+              });
+  }
+
+  
   function clickDelete() {
   
     fetch(`http://localhost:3000/songs/${selectedSongId}`, {
@@ -51,9 +113,8 @@ function App() {
         
     })
             .then(res => res.json())
-            .then(data => {
-              console.log(data)  
-              alert(`libro eliminato con successo`)
+            .then(() => {
+              alert(`canzone eliminata con successo`)
               location.reload();
               setMode("list")
                 
@@ -70,7 +131,10 @@ function App() {
           <>
             <div>
 
-              <button className='counter'>Salva</button>
+              <button
+                className='counter'
+                onClick={clickEdit}
+              >Salva</button>
               <button
                 className='counter'
                 onClick={clickDelete}
@@ -80,7 +144,13 @@ function App() {
                 onClick={UndoSelectedSong}
               >Annulla</button>
             </div>
-            <ModSong selectedSongId={selectedSongId} clickDelete={clickDelete}/>
+            <ModSong 
+              selectedSongId={selectedSongId}
+              artist={artist}
+              setArtist={setArtist}
+              title={title}
+              setTitle={setTitle}
+            />
           </>
         )}
 
@@ -88,13 +158,22 @@ function App() {
           <>
              <div>
 
-                <button className='counter'>Salva</button>
+                <button
+                  className='counter'
+                  onClick={clickCreate}
+                >Salva</button>
                 <button 
                   className='counter'
                   onClick={UndoAddSong}
                 >Annulla</button>
               </div>
-              <NewSong selectedSongId={selectedSongId}/>
+              <NewSong
+                selectedSongId={selectedSongId}
+                artist={artist}
+                setArtist={setArtist}
+                title={title}
+                setTitle={setTitle}
+              />
           </>
         )}
 

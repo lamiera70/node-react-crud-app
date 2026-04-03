@@ -1,30 +1,11 @@
 
-import { useState, useEffect } from 'react';
+
 import './ModSong.css';
 
-function ModSong({selectedSongId}) {
+function ModSong({title, setTitle, artist, setArtist}) {
 
-  const [title, setTitle] = useState('');
-  const [artist, setArtist] = useState('');
-  
-  
-  useEffect(() => {
-        if (selectedSongId) {
-            fetch(`http://localhost:3000/songs/${selectedSongId}`)
-                .then(res => res.json())
-                .then(data => {
-                    setTitle(data.title);
-                    setArtist(data.artist);
-                    
-                });
-        }
-    }, [selectedSongId]);
-
-
-  
-
-
-
+   
+ 
   return (
     <div className="mod-card">
       <h3>Modifica brano</h3>
