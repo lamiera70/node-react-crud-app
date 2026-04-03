@@ -27,39 +27,57 @@ function App() {
 
   function UndoSelectedSong() {
     setMode("list")
+    setTitle("")
+    setArtist("")
+    setSelectedSongId(null)
   }
 
   function addSong() {
     setMode("add")
+    setTitle("")
+    setArtist("")
   }
 
   function UndoAddSong() {
     setMode("list")
+    setTitle("")
+    setArtist("")
+    setSelectedSongId(null)
+  }
+
+
+  function loadSongs() {
+    fetch('http://localhost:3000/songs')
+      .then(res => res.json())
+      .then(data => setSongs(data));
   }
 
 
   useEffect(() => {
-    fetch('http://localhost:3000/songs')
-    .then(res => res.json())
-    .then(data =>
-      setSongs(data)
-    )
+    loadSongs()
   }, [])
 
+
   useEffect(() => {
-        if (selectedSongId) {
-            fetch(`http://localhost:3000/songs/${selectedSongId}`)
-                .then(res => res.json())
-                .then(data => {
-                    setTitle(data.title);
-                    setArtist(data.artist);
-                    
-                });
-        }
-    }, [selectedSongId]);
+    if (selectedSongId) {
+        fetch(`http://localhost:3000/songs/${selectedSongId}`)
+            .then(res => res.json())
+            .then(data => {
+                setTitle(data.title);
+                setArtist(data.artist);
+                
+            });
+    }
+  }, [selectedSongId]);
 
 
   function clickCreate() {
+    
+    
+    if (title.length === 0 || artist.length === 0) {
+                  alert('Devi inserire il titolo e artista')
+                  return
+                }  
     
     fetch(`http://localhost:3000/songs`, {
         method: 'POST',
@@ -72,12 +90,13 @@ function App() {
             
         })
     })
+            
             .then(res => res.json())
-            .then(data => {
-                setTitle(data.title);
-                setArtist(data.artist);  
+            .then(() => {
+                setTitle(title);
+                setArtist(artist);
+                loadSongs()
                 alert(`canzone creata con successo`)
-                location.reload();
                 setMode("list")
             });
   }
@@ -86,23 +105,23 @@ function App() {
   function clickEdit() {
      
 
-      fetch(`http://localhost:3000/songs/${selectedSongId}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              title: title,
-              artist: artist,
-              
-          })
-      })
-              .then(res => res.json())
-              .then(() => {
-                  alert(`canzone modificata con successo`)
-                  location.reload();
-                  setMode("list")
-              });
+    fetch(`http://localhost:3000/songs/${selectedSongId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            title: title,
+            artist: artist,
+            
+        })
+    })
+            .then(res => res.json())
+            .then(() => {
+                loadSongs()
+                alert(`canzone modificata con successo`)
+                setMode("list")
+            });
   }
 
   
@@ -114,8 +133,8 @@ function App() {
     })
             .then(res => res.json())
             .then(() => {
+              loadSongs()
               alert(`canzone eliminata con successo`)
-              location.reload();
               setMode("list")
                 
             });
@@ -161,7 +180,7 @@ function App() {
                 <button
                   className='counter'
                   onClick={clickCreate}
-                >Salva</button>
+                >Aggiungi</button>
                 <button 
                   className='counter'
                   onClick={UndoAddSong}
