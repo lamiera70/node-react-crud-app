@@ -42,6 +42,24 @@ function App() {
       setSongs(data)
     )
   }, [])
+
+
+  function clickDelete() {
+  
+    fetch(`http://localhost:3000/songs/${selectedSongId}`, {
+        method: 'DELETE'
+        
+    })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data)  
+              alert(`libro eliminato con successo`)
+              location.reload();
+              setMode("list")
+                
+            });
+
+  }
   
 
   return (
@@ -53,13 +71,16 @@ function App() {
             <div>
 
               <button className='counter'>Salva</button>
-              <button className='counter'>Elimina</button>
+              <button
+                className='counter'
+                onClick={clickDelete}
+              >Elimina</button>
               <button 
                 className='counter'
                 onClick={UndoSelectedSong}
               >Annulla</button>
             </div>
-            <ModSong selectedSongId={selectedSongId}/>
+            <ModSong selectedSongId={selectedSongId} clickDelete={clickDelete}/>
           </>
         )}
 
