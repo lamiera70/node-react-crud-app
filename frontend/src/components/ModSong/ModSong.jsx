@@ -4,8 +4,6 @@ import './ModSong.css';
 
 function ModSong({title, setTitle, artist, setArtist}) {
 
-   
- 
   return (
     <div className="mod-card">
       <h3>Modifica brano</h3>

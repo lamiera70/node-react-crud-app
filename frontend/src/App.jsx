@@ -12,41 +12,40 @@ function App() {
   const [songs, setSongs] = useState([])
   const [selectedSongId, setSelectedSongId] = useState(null)
   const [mode, setMode] = useState("list")
-
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
-  
 
 
   function addSelectedSongId(id) {
-    
+
     setSelectedSongId(id)
     setMode("edit")
   }
 
-
   function UndoSelectedSong() {
+
     setMode("list")
     setTitle("")
     setArtist("")
-    setSelectedSongId(null)
   }
 
   function addSong() {
+
     setMode("add")
     setTitle("")
     setArtist("")
   }
 
   function UndoAddSong() {
+
     setMode("list")
     setTitle("")
     setArtist("")
-    setSelectedSongId(null)
   }
 
 
   function loadSongs() {
+
     fetch('http://localhost:3000/songs')
       .then(res => res.json())
       .then(data => setSongs(data));
@@ -59,25 +58,24 @@ function App() {
 
 
   useEffect(() => {
+
     if (selectedSongId) {
         fetch(`http://localhost:3000/songs/${selectedSongId}`)
-            .then(res => res.json())
-            .then(data => {
-                setTitle(data.title);
-                setArtist(data.artist);
-                
-            });
+          .then(res => res.json())
+          .then(data => {
+            setTitle(data.title);
+            setArtist(data.artist);
+          });
     }
   }, [selectedSongId]);
 
 
   function clickCreate() {
     
-    
-    if (title.length === 0 || artist.length === 0) {
-                  alert('Devi inserire il titolo e artista')
-                  return
-                }  
+    if (title.trim().length === 0 || artist.trim().length === 0) {
+      alert('Devi inserire il titolo e artista')
+      return
+    }  
     
     fetch(`http://localhost:3000/songs`, {
         method: 'POST',
@@ -91,19 +89,18 @@ function App() {
         })
     })
             
-            .then(res => res.json())
-            .then(() => {
-                setTitle(title);
-                setArtist(artist);
-                loadSongs()
-                alert(`canzone creata con successo`)
-                setMode("list")
-            });
+          .then(res => res.json())
+          .then(() => {
+            setTitle(title);
+            setArtist(artist);
+            loadSongs()
+            alert(`canzone creata con successo`)
+            setMode("list")
+          });
   }
   
   
   function clickEdit() {
-     
 
     fetch(`http://localhost:3000/songs/${selectedSongId}`, {
         method: 'PUT',
@@ -136,9 +133,7 @@ function App() {
               loadSongs()
               alert(`canzone eliminata con successo`)
               setMode("list")
-                
             });
-
   }
   
 

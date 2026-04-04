@@ -2,6 +2,7 @@
 import './NewSong.css';
 
 function NewSong({title, setTitle, artist, setArtist}) {
+
   return (
     <div className="new-card">
       <h3>Aggiungi brano</h3>
