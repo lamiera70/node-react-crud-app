@@ -1,5 +1,6 @@
 
 import reactLogo from './assets/react.svg';
+const VITE_API_URL =  import.meta.env.VITE_API_URL;
 
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -46,7 +47,7 @@ function App() {
 
   function loadSongs() {
 
-    fetch('http://localhost:3000/songs')
+    fetch(`${VITE_API_URL}/songs`)
       .then(res => res.json())
       .then(data => setSongs(data));
   }
@@ -60,7 +61,7 @@ function App() {
   useEffect(() => {
 
     if (selectedSongId) {
-        fetch(`http://localhost:3000/songs/${selectedSongId}`)
+        fetch(`${VITE_API_URL}/songs/${selectedSongId}`)
           .then(res => res.json())
           .then(data => {
             setTitle(data.title);
@@ -77,7 +78,7 @@ function App() {
       return
     }  
     
-    fetch(`http://localhost:3000/songs`, {
+    fetch(`${VITE_API_URL}/songs`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -102,7 +103,7 @@ function App() {
   
   function clickEdit() {
 
-    fetch(`http://localhost:3000/songs/${selectedSongId}`, {
+    fetch(`${VITE_API_URL}/songs/${selectedSongId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -124,7 +125,7 @@ function App() {
   
   function clickDelete() {
   
-    fetch(`http://localhost:3000/songs/${selectedSongId}`, {
+    fetch(`${VITE_API_URL}/songs/${selectedSongId}`, {
         method: 'DELETE'
         
     })

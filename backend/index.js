@@ -1,12 +1,14 @@
+require("dotenv").config();
+
 const express = require('express');
 const crypto = require('crypto');
 const app = express();
 const cors = require('cors');
-const PORT = 3000;
+const PORT = process.env.PORT_DEV;
 
 // middleware
 app.use(express.json()); // ✅ fondamentale per leggere JSON nel body
-app.use(cors({origin: 'http://localhost:5173'}));
+app.use(cors({origin: process.env.CORS_ORIGIN}));
 
 let songs = [
   { id: crypto.randomUUID(), title: "Shape of You", artist: "Ed Sheeran" },
