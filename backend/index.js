@@ -8,7 +8,7 @@ const PORT = process.env.PORT_DEV;
 
 // middleware
 app.use(express.json()); // ✅ fondamentale per leggere JSON nel body
-app.use(cors({origin: process.env.CORS_ORIGIN}));
+app.use(cors());
 
 let songs = [
   { id: crypto.randomUUID(), title: "Shape of You", artist: "Ed Sheeran" },
