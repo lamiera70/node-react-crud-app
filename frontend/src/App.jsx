@@ -207,7 +207,7 @@ function App() {
               >Aggiungi</button>
               {loading ? (
               <p style={{ textAlign: "center" }}>
-                ⏳ Sto contattando il server (potrebbe richiedere qualche secondo...)
+                ⏳ Il server di RENDER si sta riavviando (potrebbe richiedere qualche secondo...)
               </p>
               ) : (
                 <ListSongs
