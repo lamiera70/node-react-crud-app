@@ -11,6 +11,7 @@ import NewSong from './components/NewSong/NewSong';
 function App() {
 
   const [songs, setSongs] = useState([])
+  const [loading, setLoading] = useState(false)
   const [selectedSongId, setSelectedSongId] = useState(null)
   const [mode, setMode] = useState("list")
   const [title, setTitle] = useState('');
@@ -47,13 +48,19 @@ function App() {
 
   function loadSongs() {
 
+    setLoading(true)
+
     fetch(`${VITE_API_URL}/songs`)
       .then(res => res.json())
-      .then(data => setSongs(data));
+      .then(data => {
+        setSongs(data)
+        setLoading(false)
+      })
   }
 
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadSongs()
   }, [])
 
@@ -198,11 +205,17 @@ function App() {
                 className='counter'
                 onClick={addSong}
               >Aggiungi</button>
-              <ListSongs
-                songs={songs}
-                selectedSongId={selectedSongId}
-                setSelectedSongId={addSelectedSongId}
-              />
+              {loading ? (
+              <p style={{ textAlign: "center" }}>
+                ⏳ Sto contattando il server (potrebbe richiedere qualche secondo...)
+              </p>
+              ) : (
+                <ListSongs
+                  songs={songs}
+                  selectedSongId={selectedSongId}
+                  setSelectedSongId={addSelectedSongId}
+                />
+              )}
           </>
         )}
         
