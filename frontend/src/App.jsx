@@ -12,6 +12,7 @@ function App() {
 
   const [songs, setSongs] = useState([])
   const [loading, setLoading] = useState(false)
+  const [seconds, setSeconds] = useState(0)
   const [selectedSongId, setSelectedSongId] = useState(null)
   const [mode, setMode] = useState("list")
   const [title, setTitle] = useState('');
@@ -48,6 +49,7 @@ function App() {
 
   function loadSongs() {
 
+    setSeconds(0)
     setLoading(true)
 
     fetch(`${VITE_API_URL}/songs`)
@@ -59,6 +61,17 @@ function App() {
   }
 
 
+  useEffect(() => {
+    if (!loading) return;
+
+    const interval = setInterval(() => {
+      setSeconds(prev => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [loading]);
+  
+  
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadSongs()
@@ -208,6 +221,7 @@ function App() {
               {loading ? (
               <p style={{ textAlign: "center" }}>
                 ⏳ Il server di RENDER si sta riavviando (potrebbe richiedere qualche secondo...)
+                <p>Tempo: {seconds} secondi</p>
               </p>
               ) : (
                 <ListSongs
