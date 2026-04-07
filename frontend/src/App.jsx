@@ -220,7 +220,7 @@ function App() {
               >Aggiungi</button>
               {loading ? (
               <p style={{ textAlign: "center" }}>
-                ⏳ Il server di RENDER si sta riavviando (potrebbe richiedere qualche secondo...)
+                ⏳ Il server di RENDER si sta riavviando (potrebbe richiedere fino a 30 secondi...)
                 <p>Tempo: {seconds} secondi</p>
               </p>
               ) : (
